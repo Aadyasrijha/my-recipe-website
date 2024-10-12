@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaj Khane Mein Kya Hai Mumma!!!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffebcd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            transition: background 0.5s ease-in-out;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5rem;
+            color: #34495e;
+        }
+        .btn {
+            padding: 10px 25px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Veg Cuisines</h1>
+        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" alt="Vegetarian Icon" style="width: 100px; margin-bottom: 20px;">
+        <p id="recipeText">Click next to see the first recipe!</p>
+        <button class="btn" onclick="previousRecipe()">Last</button>
+        <button class="btn" onclick="nextRecipe()">Next</button>
+        <button class="btn" onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+
+<script>
+    const vegRecipes = [
+        "Litti Chokha (Bihar) — Roasted wheat balls stuffed with spiced sattu, served with a tangy brinjal mash, perfect for a wholesome meal.",
+        "Dal Pitha (Bihar) — Steamed rice flour dumplings filled with spiced lentils, a delicious and nutritious dish enjoyed with chutney.",
+        "Malpua (Bihar) — Sweet pancakes made with flour, milk, and sugar, often garnished with grated coconut and served warm.",
+        "Paneer Tikka (Punjab) — Marinated paneer cubes grilled to perfection, served with mint chutney and sliced onions, bursting with flavor.",
+        "Chole Bhature (Punjab) — Spicy chickpeas served with fluffy deep-fried bread, a hearty combination that's a must-try for any foodie.",
+        "Baingan Bharta (Punjab) — Smoky mashed eggplant cooked with onions, tomatoes, and spices, best enjoyed with fresh rotis.",
+        "Palak Paneer (Punjab) — Creamy spinach curry with soft paneer cubes, rich in flavor and nutrients, often paired with naan.",
+        "Aloo Gobi (Punjab) — Stir-fried potatoes and cauliflower with spices, a comforting dish that complements any meal.",
+        "Vegetable Biryani (Hyderabad) — Fragrant basmati rice cooked with mixed vegetables and aromatic spices, served with raita for a perfect balance.",
+        "Samosa (North India) — Crispy pastry filled with spiced potatoes and peas, a popular snack that's perfect for any occasion.",
+        "Pav Bhaji (Mumbai) — A spicy vegetable mash served with buttered bread rolls, a beloved street food that’s absolutely delicious.",
+        "Dhokla (Gujarat) — Steamed gram flour cake that's light and fluffy, often served with tangy green chutney, perfect for snacking.",
+        "Khandvi (Gujarat) — Rolled gram flour sheets seasoned with mustard seeds and coconut, a delightful and unique snack.",
+        "Tandoori Mushroom (Punjab) — Marinated mushrooms grilled in a tandoor, smoky and flavorful, great as an appetizer.",
+        "Rajma (Punjab) — Kidney beans cooked in a rich tomato gravy, a comforting and hearty dish best served with rice.",
+        "Veg Pulao (North India) — Fragrant rice dish with mixed vegetables and spices, quick to prepare and full of flavor.",
+        "Bhindi Masala (North India) — Stir-fried okra with onions and spices, a simple yet delicious side dish that pairs well with roti.",
+        "Masoor Dal (North India) — Red lentils cooked with tomatoes and spices, a nutritious staple often enjoyed with rice or roti.",
+        "Vegetable Manchurian (Indo-Chinese) — Fried vegetable balls in a tangy sauce, a popular Indo-Chinese dish that everyone loves.",
+        "Paneer Butter Masala (Punjab) — Paneer cubes in a creamy tomato gravy, a rich and indulgent curry perfect with naan.",
+        "Methi Thepla (Gujarat) — Spiced flatbreads made with fenugreek leaves, great for breakfast or as a side dish.",
+        "Upma (South India) — Savory semolina dish cooked with vegetables and spices, a hearty and satisfying breakfast option.",
+        "Pesarattu (Andhra Pradesh) — Green gram dosa filled with spiced onions, a nutritious and delicious crepe, great for breakfast.",
+        "Chaat (North India) — A mix of crispy snacks, potatoes, yogurt, and chutneys, bursting with flavors and perfect for snacking.",
+        "Aloo Tikki (North India) — Spiced potato patties, crispy on the outside and soft inside, often served with sweet and tangy chutney.",
+        "Vegetable Korma (North India) — Mixed vegetables cooked in a rich coconut and spice gravy, perfect with naan or rice.",
+        "Pani Puri (North India) — Crispy puris filled with spicy water and tangy tamarind chutney, a fun and interactive street snack.",
+        "Khichdi (North India) — Comforting dish of rice and lentils cooked together, often garnished with ghee and spices, a homely meal.",
+        "Bhel Puri (Mumbai) — A crunchy snack made with puffed rice, vegetables, and tangy tamarind sauce, refreshing and zesty.",
+        "Palak Chole (Punjab) — Spinach and chickpeas cooked together in a flavorful gravy, nutritious and filling, often served with rice.",
+        "Paneer Pakora (North India) — Crispy paneer fritters dipped in gram flour batter, a delightful tea-time snack enjoyed by all.",
+        "Vegetable Spring Rolls (Indo-Chinese) — Crispy rolls filled with spiced vegetables, perfect for dipping in soy sauce or sweet chili sauce.",
+        "Dum Aloo (Kashmir) — Baby potatoes cooked in a rich gravy, flavored with aromatic spices, great with rice or roti.",
+        "Idli (South India) — Steamed rice cakes, light and fluffy, often served with coconut chutney and sambar for breakfast.",
+        "Vada Pav (Mumbai) — Spicy potato fritter sandwiched in a bun, a beloved Mumbai street food that’s utterly delicious.",
+        "Aloo Chaat (North India) — Spicy potatoes topped with yogurt, chutney, and sev, a tantalizing and flavorful snack.",
+        "Vegetable Curry (North India) — Mixed seasonal vegetables cooked in a spiced gravy, hearty and wholesome, great with rice or roti.",
+        "Lemon Rice (South India) — Fragrant rice dish with lemon juice, peanuts, and spices, refreshing and zesty for a quick meal.",
+        "Mushroom Curry (North India) — Tender mushrooms cooked in a creamy tomato sauce, rich and delicious, great with naan.",
+        "Rawa Upma (South India) — Roasted semolina cooked with vegetables and spices, a quick and tasty breakfast option.",
+        "Vegetable Stew (Kerala) — A comforting mix of vegetables simmered in coconut milk and spices, warm and inviting.",
+        "Cheese Corn Balls (North India) — Crispy fried balls filled with cheese and corn, a favorite party snack that everyone enjoys.",
+        "Sooji Halwa (North India) — Sweet semolina dessert cooked with ghee, sugar, and cardamom, truly indulgent and comforting.",
+        "Dumplings (North India) — Soft and flavorful, these can be filled with a variety of spiced vegetables, steamed or fried.",
+        "Kadhi Pakora (North India) — Spiced yogurt curry with gram flour dumplings, delicious with rice and perfect for any meal.",
+        "Rasmalai (West Bengal) — Soft paneer discs soaked in sweetened milk, a delightful Indian dessert that melts in your mouth.",
+        "Methi Malai Murg (North India) — Creamy fenugreek curry that pairs beautifully with naan or rice, rich and satisfying.",
+        "Cabbage Sabzi (North India) — Stir-fried cabbage with spices, simple yet satisfying, perfect as a side dish.",
+        "Biryani (Hyderabad) — Layered rice dish cooked with aromatic spices and your choice of vegetables, a festive delight.",
+        "Aloo Methi (North India) — Potatoes and fenugreek leaves cooked with spices, healthy and tasty, ideal with chapati.",
+        "Pulao (North India) — Fragrant rice with mixed vegetables, a quick and easy one-pot meal that everyone loves.",
+        "Dal Makhani (Punjab) — Creamy black lentils simmered with spices, a rich and hearty dish often served with naan.",
+        "Vegetable Fritters (North India) — Crispy, deep-fried snacks made with seasonal veggies and spices, a perfect tea-time treat.",
+        "Gajar Halwa (North India) — Grated carrots cooked with milk and sugar, a traditional sweet treat that's warm and comforting.",
+        "Paneer Tikka Masala (Punjab) — Marinated paneer cooked in a rich, spicy gravy, perfect with roti or naan.",
+        "Kachori (North India) — Flaky pastry filled with spiced lentils, a delicious snack or appetizer for any occasion.",
+        "Vegetable Soup (North India) — A warming soup packed with seasonal vegetables and spices, perfect for chilly days.",
+        "Chana Masala (North India) — Spicy chickpeas simmered in a tangy tomato sauce, great with rice or naan.",
+        "Methi Paratha (Gujarat) — Whole wheat flatbread with fenugreek leaves, delicious with yogurt and pickles.",
+        "Gobi Manchurian (Indo-Chinese) — Crispy cauliflower tossed in a tangy sauce, an Indo-Chinese favorite that's addictive.",
+        "Sooji Dhokla (Gujarat) — Steamed gram flour cake flavored with spices, light and fluffy, perfect for snacking.",
+        "Vegetable Kathi Roll (North India) — Spiced veggies wrapped in paratha, a delicious on-the-go meal that's filling and tasty.",
+        "Chickpea Salad (North India) — Refreshing salad made with chickpeas, vegetables, and tangy dressing, healthy and flavorful.",
+        "Zucchini Fritters (North India) — Crispy zucchini pancakes, perfect for snacking or as a side dish with yogurt.",
+        "Fruit Chaat (North India) — A refreshing mix of seasonal fruits with spices, a sweet and tangy snack that's healthy and light.",
+        "Khichdi (Gujarat) — A comforting mix of rice and lentils, often enjoyed with ghee and pickles for a simple meal.",
+        "Paneer Bhurji (North India) — Scrambled paneer with spices, quick and easy to make, often served with bread or chapati.",
+        "Vegetable Samosa (North India) — Crispy pastry filled with spiced vegetables, a classic snack loved by all.",
+        "Kesar Pista Kulfi (North India) — Creamy ice cream flavored with saffron and pistachio, a delightful dessert for special occasions.",
+        "Vegetable Biryani (South India) — Fragrant rice dish cooked with spices and vegetables, a perfect one-pot meal.",
+        "Tandoori Broccoli (North India) — Marinated broccoli grilled to perfection, a healthy and tasty side dish.",
+        "Chole (Punjab) — Spiced chickpeas cooked in a rich gravy, best served with bhature or rice.",
+        "Vegetable Pulao (North India) — Flavored rice dish cooked with seasonal vegetables, a quick and wholesome meal.",
+        "Bisi Bele Bath (Karnataka) — Spicy rice and lentil dish cooked with vegetables, packed with flavors and nutrition.",
+        "Daal Dhokli (Gujarat) — Whole wheat noodles cooked in a spiced lentil soup, a comforting and nutritious meal.",
+        "Spicy Vegetable Hakka Noodles (Indo-Chinese) — Stir-fried noodles tossed with mixed veggies and sauces, quick and satisfying.",
+        "Vegetable Pakoras (North India) — Crispy fritters made from mixed vegetables, perfect for snacking.",
+        "Chili Paneer (Indo-Chinese) — Spicy paneer cubes tossed in a tangy sauce, a popular appetizer that’s sure to please.",
+        "Lemon Rice (South India) — A refreshing rice dish made with lemon juice, peanuts, and spices, perfect for a quick meal.",
+        "Rajma Chawal (Punjab) — Kidney beans in a rich gravy served with steamed rice, a comforting and hearty meal."
+    ];
+
+    // Shuffle the array
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    let shuffledRecipes = shuffleArray([...vegRecipes]); // Create a shuffled copy of the recipes
+    let currentIndex = 0;
+
+    function nextRecipe() {
+        currentIndex = (currentIndex + 1) % shuffledRecipes.length; // Wrap around to the first recipe
+        updateRecipeText();
+    }
+
+    function previousRecipe() {
+        currentIndex = (currentIndex - 1 + shuffledRecipes.length) % shuffledRecipes.length; // Wrap around if below 0
+        updateRecipeText();
+    }
+
+    function updateRecipeText() {
+        document.getElementById("recipeText").innerText = shuffledRecipes[currentIndex];
+        changeBackground();
+    }
+
+    function changeBackground() {
+        const randomGradient = `linear-gradient(45deg, ${getRandomColor()}, ${getRandomColor()})`;
+        document.body.style.background = randomGradient;
+    }
+
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Show the first recipe initially
+    updateRecipeText();
+</script>
+</body>
+</html>

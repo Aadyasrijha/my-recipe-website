@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaj Khane Mein Kya Hai Mumma!!!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            transition: background 0.5s ease-in-out;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5rem;
+            color: #34495e;
+        }
+        .btn {
+            padding: 10px 25px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Non-Veg Cuisines</h1>
+       <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" alt="Vegetarian Icon" style="width: 100px; margin-bottom: 20px;">
+        <p id="recipeText">Click next to see the first cuisines!</p>
+        <button class="btn" onclick="previousRecipe()">Last</button>
+        <button class="btn" onclick="nextRecipe()">Next</button>
+        <button class="btn" onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+
+    <script>
+        const nonVegRecipes = [
+            "Butter Chicken (Punjab) — Tender chicken pieces simmered in a creamy tomato sauce, rich with spices, served with naan or rice for a truly indulgent meal.",
+    "Biryani (Hyderabad) — Aromatic basmati rice layered with marinated chicken, fragrant spices, and saffron, creating a flavorful one-pot dish that's perfect for celebrations.",
+    "Fish Curry (Kerala) — Fresh fish cooked in a spicy coconut milk gravy, infused with tamarind and spices, served with steamed rice for a taste of the sea.",
+    "Mutton Rogan Josh (Kashmir) — Succulent pieces of lamb slow-cooked in a rich, spiced gravy, known for its vibrant red color and aromatic flavors, best enjoyed with naan.",
+    "Prawn Masala (Goa) — Juicy prawns cooked in a fiery masala with tomatoes and coconut, offering a burst of flavors from the coastal spices.",
+    "Chicken Tikka (Punjab) — Marinated chicken grilled to perfection, served with mint chutney, this dish is smoky, spicy, and irresistible as an appetizer.",
+    "Lamb Seekh Kebabs (North India) — Spiced minced lamb skewers grilled until juicy and flavorful, perfect as a snack or served with parathas.",
+    "Crab Curry (Goa) — Fresh crab cooked in a spicy coconut gravy with a hint of tamarind, offering a delightful blend of flavors.",
+    "Chicken Biryani (Lucknow) — Fragrant rice layered with marinated chicken, saffron, and spices, cooked to perfection in a sealed pot.",
+    "Fish Amritsari (Punjab) — Batter-fried fish fillets seasoned with spices, served with tangy mint chutney for a delicious starter.",
+    "Mutton Korma (North India) — A rich and creamy curry made with tender lamb pieces, yogurt, and a blend of aromatic spices.",
+    "Tandoori Chicken (Punjab) — Marinated chicken grilled in a clay oven, giving it a smoky flavor and served with tangy onion salad.",
+    "Goan Fish Curry — A tangy and spicy fish curry made with coconut milk and kokum, a must-try for seafood lovers.",
+    "Chicken Chettinad — A fiery South Indian curry made with freshly ground spices and tender chicken pieces.",
+    "Prawn Vindaloo (Goa) — A spicy and tangy curry made with prawns, vinegar, and a blend of spices, perfect for a zesty meal.",
+    "Kadai Chicken (North India) — Chicken cooked in a wok with bell peppers and spices, delivering a burst of flavors in every bite.",
+    "Mutton Do Pyaza (North India) — Tender lamb cooked with lots of onions and spices, known for its rich flavor and aroma.",
+    "Chicken 65 (South India) — Spicy, crispy fried chicken pieces, marinated in a blend of spices, perfect as a snack or appetizer.",
+    "Malabar Chicken Curry (Kerala) — Chicken cooked in a coconut-based gravy with a blend of spices, perfect with rice or appams.",
+    "Pork Vindaloo (Goa) — A spicy and tangy pork curry, known for its vinegar-based marinade and robust flavors.",
+    "Fish Tikka (North India) — Marinated fish grilled until tender and smoky, served with a side of mint chutney.",
+    "Butter Prawns (Goa) — Succulent prawns cooked in a rich butter sauce with garlic and spices, served with bread for dipping.",
+    "Mutton Nihari (North India) — Slow-cooked lamb in a rich gravy, traditionally served for breakfast with naan.",
+    "Chicken Korma (North India) — A creamy and mildly spiced curry made with yogurt, nuts, and tender chicken.",
+    "Tandoori Prawns (North India) — Prawns marinated in spices and grilled in a tandoor, served with lemon and onions.",
+    "Nihari Gosht (Lucknow) — Tender meat cooked slowly in spices, served with naan for a rich breakfast.",
+    "Lamb Biryani (Kashmir) — Fragrant rice layered with marinated lamb, cooked with saffron and spices for a festive treat.",
+    "Chicken Shawarma (Middle Eastern) — Spiced chicken wrapped in pita bread, served with garlic sauce and fresh veggies.",
+    "Fish Curry Rice (Kerala) — Spicy fish curry served with boiled rice, a simple yet satisfying meal.",
+    "Spicy Chicken Skewers (North India) — Grilled chicken marinated in spices, served with a side of chutney.",
+    "Pork Biryani (Goa) — A fragrant one-pot dish made with marinated pork and aromatic spices, loved by many.",
+    "Mutton Seekh Kebabs (North India) — Minced meat skewers spiced and grilled, perfect as a starter or snack.",
+    "Lamb Tagine (Moroccan) — Slow-cooked lamb with apricots and spices, served with couscous for a unique flavor.",
+    "Grilled Chicken Salad (Western) — Marinated grilled chicken served on a bed of fresh greens with a tangy dressing.",
+    "Egg Curry (North India) — Hard-boiled eggs simmered in a spiced tomato gravy, served with rice or bread.",
+    "Chicken Paprika (Hungarian) — Tender chicken cooked in a rich paprika sauce, served with noodles or rice.",
+    "Fish & Chips (British) — Crispy battered fish served with fries and tartar sauce, a classic comfort dish.",
+    "Mutton Adana Kebab (Turkey) — Spiced minced lamb skewers grilled and served with flatbread and yogurt sauce.",
+    "Chicken Jalfrezi (North India) — Stir-fried chicken with bell peppers and spices, offering a delightful crunch.",
+    "Crab Rangoon (American-Chinese) — Fried wontons filled with crab and cream cheese, served with sweet chili sauce.",
+    "Chicken Pesto Pasta (Italian) — Grilled chicken tossed with pasta and fresh basil pesto for a delicious meal.",
+    "Seafood Paella (Spanish) — A colorful rice dish loaded with shrimp, mussels, and spices, perfect for sharing.",
+    "Tandoori Lamb Chops (North India) — Juicy lamb chops marinated in spices and grilled to perfection.",
+    "Chili Chicken (Indo-Chinese) — Spicy battered chicken tossed in a tangy sauce, a popular fusion dish.",
+    "Duck Curry (South Indian) — Tender duck pieces cooked in a coconut gravy, a rich and flavorful delicacy.",
+    "Baked Salmon (Western) — Salmon fillet baked with herbs and lemon, served with roasted vegetables for a healthy meal."
+        ];
+
+        let currentRecipe = 0;
+        let lastRecipe = 0;
+
+        function randomGradient() {
+            const colors = [
+                `#${Math.floor(Math.random()*16777215).toString(16)}`,
+                `#${Math.floor(Math.random()*16777215).toString(16)}`
+            ];
+            document.body.style.background = `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
+        }
+
+        function nextRecipe() {
+            lastRecipe = currentRecipe;
+            currentRecipe = (currentRecipe + 1) % nonVegRecipes.length;
+            document.getElementById("recipeText").innerText = nonVegRecipes[currentRecipe];
+            randomGradient(); // Change background gradient
+        }
+
+        function previousRecipe() {
+            document.getElementById("recipeText").innerText = nonVegRecipes[lastRecipe];
+            randomGradient(); // Change background gradient
+        }
+
+        // Set initial background
+        randomGradient();
+    </script>
+</body>
+</html>
